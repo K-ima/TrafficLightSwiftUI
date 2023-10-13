@@ -11,6 +11,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @State var nameButton = "START"
+    
     @State var currentLight = CurrentLight.red
     @State var redLight = lightSection.off.rawValue
     @State var yellowLight = lightSection.off.rawValue
@@ -18,9 +19,18 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            TrafficSectionView(color: .red.opacity(redLight), colorOverlay: selectLineColor())
-            TrafficSectionView(color: .yellow.opacity(yellowLight), colorOverlay: selectLineColor())
-            TrafficSectionView(color: .green.opacity(greenLight), colorOverlay: selectLineColor())
+            TrafficSectionView(
+                color: .red.opacity(redLight),
+                colorOverlay: selectLineColor()
+            )
+            TrafficSectionView(
+                color: .yellow.opacity(yellowLight),
+                colorOverlay: selectLineColor()
+            )
+            TrafficSectionView(
+                color: .green.opacity(greenLight),
+                colorOverlay: selectLineColor()
+            )
         }
         .padding()
         
@@ -36,7 +46,6 @@ struct ContentView: View {
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .overlay(RoundedRectangle(cornerRadius: 15).stroke(selectLineColor(), lineWidth: 4))
         .padding(.bottom, 40)
-        
     }
     
     func selectLineColor() -> Color {
