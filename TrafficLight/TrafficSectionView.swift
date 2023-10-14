@@ -9,18 +9,18 @@ import SwiftUI
 
 struct TrafficSectionView: View {
     let color: Color
-    let colorOverlay: Color
+    let opacity: Double
     
     var body: some View {
         Circle()
-            .foregroundColor(color)
+            .foregroundColor(color.opacity(opacity))
             .frame(width: 120, height: 120)
-            .overlay(Circle().stroke(colorOverlay, lineWidth: 4))
+            .overlay(Circle().stroke(.primary, lineWidth: 4))
     }
 }
 
 struct TrafficSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        TrafficSectionView(color: .red, colorOverlay: .black)
+        TrafficSectionView(color: .red, opacity: 0.3)
     }
 }

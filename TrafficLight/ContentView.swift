@@ -8,35 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.colorScheme) var colorScheme
+    @State private var nameButton = "START"
     
-    @State var nameButton = "START"
+    private let lightOn = 1.0
+    private let lightOff = 0.3
     
-    @State var currentLight = CurrentLight.red
-    @State var redLight = lightSection.off.rawValue
-    @State var yellowLight = lightSection.off.rawValue
-    @State var greenLight = lightSection.off.rawValue
+    @State private var currentLight = CurrentLight.red
+    @State private var redLight = 0.3
+    @State private var yellowLight = 0.3
+    @State private var greenLight = 0.3
     
     var body: some View {
         VStack {
-            TrafficSectionView(
-                color: .red.opacity(redLight),
-                colorOverlay: selectLineColor()
-            )
-            TrafficSectionView(
-                color: .yellow.opacity(yellowLight),
-                colorOverlay: selectLineColor()
-            )
-            TrafficSectionView(
-                color: .green.opacity(greenLight),
-                colorOverlay: selectLineColor()
-            )
+            TrafficSectionView(color: .red, opacity: redLight)
+            TrafficSectionView(color: .yellow, opacity: yellowLight)
+            TrafficSectionView(color: .green, opacity: greenLight)
         }
         .padding()
         
         Spacer()
         
-        Button(action: { startButtonPressed() }) {
+        Button(action: startButtonPressed) {
             Text(nameButton)
                 .font(.largeTitle)
         }
@@ -44,35 +36,27 @@ struct ContentView: View {
         .background(.blue)
         .foregroundColor(.white)
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .overlay(RoundedRectangle(cornerRadius: 15).stroke(selectLineColor(), lineWidth: 4))
+        .overlay(RoundedRectangle(cornerRadius: 15).stroke(.primary, lineWidth: 4))
         .padding(.bottom, 40)
     }
     
-    func selectLineColor() -> Color {
-        if colorScheme == .dark {
-            return Color.white
-        } else {
-            return Color.black
-        }
-    }
-    
-    func startButtonPressed() {
+    private func startButtonPressed() {
         if nameButton == "START" {
             nameButton = "NEXT"
         }
         
         switch currentLight {
         case .red:
-            greenLight = lightSection.off.rawValue
-            redLight = lightSection.on.rawValue
+            greenLight = lightOff
+            redLight = lightOn
             currentLight = .yellow
         case .yellow:
-            redLight = lightSection.off.rawValue
-            yellowLight = lightSection.on.rawValue
+            redLight = lightOff
+            yellowLight = lightOn
             currentLight = .green
         case .green:
-            yellowLight = lightSection.off.rawValue
-            greenLight = lightSection.on.rawValue
+            yellowLight = lightOff
+            greenLight = lightOn
             currentLight = .red
         }
     }
